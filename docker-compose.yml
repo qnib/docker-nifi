@@ -12,6 +12,38 @@ services:
     environment:
      - CONSUL_BOOTSTRAP=true
 
+  zkui:
+    extends:
+      file: base.yml
+      service: client
+    hostname: nifi-zkui
+    container_name: nifi-zkui
+    image: qnib/zkui
+    ports:
+     - 9090:9090
+
+  zookeeper:
+    extends:
+      file: base.yml
+      service: client
+    hostname: nifi-zookeeper
+    container_name: nifi-zookeeper
+    image: qnib/zookeeper
+    ports:
+     - 2181:2181
+
+  elasticsearch:
+    hostname: elasticsearch
+    container_name: elasticsearch
+    extends:
+      file: base.yml
+      service: elasticsearch
+
+  kopf:
+    extends:
+      file: base.yml
+      service: kopf
+
   nifi:
     extends:
       file: base.yml

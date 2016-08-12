@@ -14,3 +14,30 @@ services:
       - nifi-consul
     environment:
      - CONSUL_CLUSTER_IPS=nifi-consul
+
+  elasticsearch:
+    extends:
+      file: base.yml
+      service: client
+    image: qnib/alpn-elasticsearch
+    environment:
+     - ES_CLUSTER_NAME=nifi
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+    volumes:
+     - /opt/elasticsearch/data/
+     - /opt/elasticsearch/logs/
+    privileged: true
+
+  kopf:
+    image: qnib/kopf
+    extends:
+      file: base.yml
+      service: client
+    hostname: kopf
+    container_name: kopf
+    environment:
+     - ES_CLUSTER_NAME=nifi
+    ports:
+     - 80:80
