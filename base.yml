@@ -1,0 +1,16 @@
+version: '2'
+services:
+  base:
+    networks:
+     - nifi-net
+    environment:
+     - DC_NAME=nifi-dc
+
+  client:
+    extends:
+      file: base.yml
+      service: base
+    dns:
+      - nifi-consul
+    environment:
+     - CONSUL_CLUSTER_IPS=nifi-consul

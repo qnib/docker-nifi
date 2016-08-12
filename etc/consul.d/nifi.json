@@ -1,0 +1,17 @@
+{
+  "services": [
+    {
+        "id": "nifi",
+        "name": "nifi",
+        "port": 8080,
+        "checks": [
+        {
+            "script": "echo 'curl -sI http://localhost:8080/nifi/';curl -sI http://localhost:8080/nifi/",
+            "interval": "5s"
+        },{
+            "script": "curl -s http://localhost:8080/nifi-api/controller/status |jq .",
+            "interval": "5s"
+        }]
+    }
+  ]
+}
